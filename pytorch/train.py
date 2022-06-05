@@ -12,15 +12,15 @@ with open('../data/Bosondata.pkl', 'rb') as inp:
 	y_test = pickle.load(inp)
 	x_valid = pickle.load(inp)
 	y_valid = pickle.load(inp)
-print "train len:",len(x_train)
-print "test len:",len(x_test)
-print "valid len", len(x_valid)
+print("train len:",len(x_train))
+print("test len:",len(x_test))
+print("valid len", len(x_valid))
 
 import torch
 import torch.autograd as autograd
 import torch.nn as nn
 import torch.optim as optim
-import codecs 
+import codecs
 from BiLSTM_CRF import BiLSTM_CRF
 from resultCal import calculate
 
@@ -39,8 +39,8 @@ model = BiLSTM_CRF(len(word2id)+1, tag2id, EMBEDDING_DIM, HIDDEN_DIM)
 
 optimizer = optim.SGD(model.parameters(), lr=0.005, weight_decay=1e-4)
 
-    
-    
+
+
 for epoch in range(EPOCHS):
     index=0
     for sentence, tags in zip(x_train,y_train):
@@ -55,7 +55,7 @@ for epoch in range(EPOCHS):
         loss.backward()
         optimizer.step()
         if index%300==0:
-            print "epoch",epoch,"index",index
+            print("epoch",epoch,"index",index)
     entityres=[]
     entityall=[]
     for sentence, tags in zip(x_test,y_test):
@@ -67,15 +67,15 @@ for epoch in range(EPOCHS):
     if len(jiaoji)!=0:
         zhun = float(len(jiaoji))/len(entityres)
         zhao = float(len(jiaoji))/len(entityall)
-        print "test:"
-        print "zhun:", zhun
-        print "zhao:", zhao
-        print "f:", (2*zhun*zhao)/(zhun+zhao)
+        print("test:")
+        print("zhun:", zhun)
+        print("zhao:", zhao)
+        print("f:", (2*zhun*zhao)/(zhun+zhao))
     else:
-        print "zhun:",0
-    
+        print("zhun:",0)
+
     path_name = "./model/model"+str(epoch)+".pkl"
-    print path_name
+    print(path_name)
     torch.save(model, path_name)
-    print "model has been saved"
+    print("model has been saved")
 

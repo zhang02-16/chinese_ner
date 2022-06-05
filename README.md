@@ -1,9 +1,9 @@
 # ChineseNER
 本项目使用
-+ python 2.7
++ python 3.6.7
 + tensorflow 1.7.0
 + pytorch 0.4.0
-
++ pip3 install http://download.pytorch.org/whl/cu90/torch-0.4.0-cp36-cp36m-win_amd64.whl
 
 对命名实体识别不了解的可以先看一下<a href="https://mp.weixin.qq.com/s/DUxbiVUykVSCLeYxRYd-LA" target="_blank">这篇文章</a>。顺便求star～
 

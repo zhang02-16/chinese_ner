@@ -80,12 +80,12 @@ def train(model,sess,saver,epochs,batch_size,data_train,data_test,id2word,id2tag
                     for j in range(len(y_batch[0])):
                         if y_batch[i][j]==pre[i][j]:
                             acc+=1
-                print float(acc)/(len(y_batch)*len(y_batch[0]))
+                print(float(acc)/(len(y_batch)*len(y_batch[0])))
         path_name = "./model/model"+str(epoch)+".ckpt"
-        print path_name
+        print(path_name)
         if epoch%3==0:
             saver.save(sess, path_name)
-            print "model has been saved"
+            print("model has been saved")
             entityres=[]
             entityall=[]
             for batch in range(batch_num): 
@@ -99,12 +99,12 @@ def train(model,sess,saver,epochs,batch_size,data_train,data_test,id2word,id2tag
             if len(jiaoji)!=0:
                 zhun = float(len(jiaoji))/len(entityres)
                 zhao = float(len(jiaoji))/len(entityall)
-                print "train"
-                print "zhun:", zhun
-                print "zhao:", zhao
-                print "f:", (2*zhun*zhao)/(zhun+zhao)
+                print("train")
+                print("zhun:", zhun)
+                print("zhao:", zhao)
+                print("f:", (2*zhun*zhao)/(zhun+zhao))
             else:
-                print "zhun:",0
+                print("zhun:",0)
 
             entityres=[]
             entityall=[]
@@ -119,12 +119,12 @@ def train(model,sess,saver,epochs,batch_size,data_train,data_test,id2word,id2tag
             if len(jiaoji)!=0:
                 zhun = float(len(jiaoji))/len(entityres)
                 zhao = float(len(jiaoji))/len(entityall)
-                print "test"
-                print "zhun:", zhun
-                print "zhao:", zhao
-                print "f:", (2*zhun*zhao)/(zhun+zhao)
+                print("test")
+                print("zhun:", zhun)
+                print("zhao:", zhao)
+                print("f:", (2*zhun*zhao)/(zhun+zhao))
             else:
-                print "zhun:",0
+                print("zhun:",0)
                 
                 
 max_len = 60
@@ -142,7 +142,8 @@ def padding_word(sen):
                   
 def test_input(model,sess,word2id,id2tag,batch_size):
     while True:
-        text = raw_input("Enter your input: ").decode('utf-8');
+        # text = raw_input("Enter your input: ").decode('utf-8');
+        text = input("Enter your input: ")
         text = re.split(u'[，。！？、‘’“”（）]', text) 
         text_id=[]
         for sen in text:
@@ -159,9 +160,9 @@ def test_input(model,sess,word2id,id2tag,batch_size):
         feed_dict = {model.input_data:text_id}
         pre = sess.run([model.viterbi_sequence], feed_dict)
         entity = get_entity(text,pre[0],id2tag)
-        print 'result:'
+        print('result:')
         for i in entity:
-            print i
+            print(i)
             
 
             
@@ -170,7 +171,8 @@ def extraction(input_path,output_path,model,sess,word2id,id2tag,batch_size):
     text = []
     with codecs.open(input_path,'rb','utf8') as inp:
         for line in inp.readlines():
-            line = re.split('[，。！？、‘’“”（）]'.decode('utf-8'), line.strip())
+            # line = re.split('[，。！？、‘’“”（）]'.decode('utf-8'), line.strip())
+            line = re.split('[，。！？、‘’“”（）]', line.strip())
             for sentence in line:
                 if sentence=='' or sentence==' ':
                     continue
